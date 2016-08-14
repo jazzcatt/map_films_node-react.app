@@ -1,0 +1,33 @@
+html, body {
+	height: 100%;
+	width: 100%;
+}
+.menu{
+	margin-top:0;
+	padding:10px;
+	background-color: #336666;
+	position: fixed;
+	width:100%;
+	z-index: 1;
+}
+.control-label{
+	line-height:30px;
+}
+.film-elem{
+	margin-top: 6%;
+	padding:2%;
+	border-left:dashed;
+	border-right: dashed;
+	border-collapse: collapse;
+	border-radius: 20px 20px 20px 20px;
+}
+.film-elem:hover{
+	background-color: #FAF0E6;
+}
+.film-head{
+	margin-bottom:10%;
+}
+.film-img{
+	border-radius: 40px 10px;	
+	width: 25%;
+}
