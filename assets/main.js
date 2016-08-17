@@ -7,9 +7,6 @@ import Add_mov_modal from './components/modals/add-modal';
 import Choose_file_modal from './components/modals/choose-file-modal';
 import Container from './components/content/container';
 
-function 	parser(data) {
-		return JSON.parse(data);
-	}
 
 class App extends React.Component {
 
@@ -24,26 +21,18 @@ class App extends React.Component {
 	}
 
 	getData() {
-		let buffer = [];
 
 		$.ajax({
 			type:'GET',
 			response: 'json',
 			url: 'http://localhost:3000/load',
 			success: function(data) {
-			buffer.push(parser(data));
-			console.log('container'+buffer);
-			this.setState({buffer: buffer[0]});
+			this.setState({buffer: JSON.parse(data)});
 			}.bind(this),
-			error: function (error) {console.log('error: ' + JSON.stringify(error))}.bind(this)
+			error: function (error) {
+				console.log('error: ' + JSON.stringify(error))}.bind(this)
 		});
-
-
-		//let buffer = [{title:'movit title',year:1000,actors:'Daya patya, tetya motya'},{title:'secont ditl', year:2000,actors:'Daya patya, tetya motya'}];
-		return buffer;
 	}
-
-
 
 	render() {
 
@@ -55,8 +44,6 @@ class App extends React.Component {
 				</div>
 	}
 }
-
-
 
 
 $(document).ready(function() {

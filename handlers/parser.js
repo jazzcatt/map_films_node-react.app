@@ -1,24 +1,14 @@
 function Parser(data) {
 	
-	this.getObjects = function(){
+	this.createElem = function(){
 		var lines = data.split('\n');
-		var buffer = [];
-		var elem = {};
+		var chunk = {};
+
 		lines.forEach((line)=>{
-		
-			if(line.length > 1){
 			var parts = line.split(':');
-			elem[parts[0]]=parts[1];
-
-		}else{
-				
-			buffer.push(elem);
-			elem = {};
-		}
-			
-	});
-
-	 return buffer;	
+			chunk[parts[0]]=parts[1];
+		});
+		return chunk;
 	}
 }
 
