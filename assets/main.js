@@ -19,7 +19,10 @@ class App extends React.Component {
 	componentDidMount() {
 		this.getData();
 	}
-
+	getId(id) {
+		console.log(id);
+		return id;
+	}
 	getData() {
 
 		$.ajax({
@@ -39,7 +42,7 @@ class App extends React.Component {
 
 		return	<div>
 					<Menu />
-					<Container data={this.state.buffer} />
+					<Container data={this.state.buffer} getId={this.getId.bind(this)}/>
 					<Add_mov_modal />
 					<Choose_file_modal />
 					<Info_modal/>

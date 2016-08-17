@@ -106,6 +106,12 @@
 				this.getData();
 			}
 		}, {
+			key: 'getId',
+			value: function getId(id) {
+				console.log(id);
+				return id;
+			}
+		}, {
 			key: 'getData',
 			value: function getData() {
 	
@@ -130,7 +136,7 @@
 					'div',
 					null,
 					_react2.default.createElement(_menu2.default, null),
-					_react2.default.createElement(_container2.default, { data: this.state.buffer }),
+					_react2.default.createElement(_container2.default, { data: this.state.buffer, getId: this.getId.bind(this) }),
 					_react2.default.createElement(_addModal2.default, null),
 					_react2.default.createElement(_chooseFileModal2.default, null),
 					_react2.default.createElement(_infoModal2.default, null)
@@ -32242,8 +32248,10 @@
 		_createClass(Container, [{
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+	
 				var elems = this.props.data.map(function (e, i) {
-					return _react2.default.createElement(_movieElem2.default, { title: e.Title, year: e['Release Year'], key: i });
+					return _react2.default.createElement(_movieElem2.default, { id: e.id, title: e.Title, year: e['Release Year'], key: i, getId: _this2.props.getId });
 				});
 				return _react2.default.createElement(
 					'div',
@@ -32292,6 +32300,11 @@
 		}
 	
 		_createClass(Movie_elem, [{
+			key: 'getId',
+			value: function getId() {
+				this.props.getId(this.props.id);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -32319,7 +32332,7 @@
 					_react2.default.createElement(
 						'div',
 						null,
-						_react2.default.createElement('input', { type: 'button', className: 'btn btn-info', value: 'Info',
+						_react2.default.createElement('input', { type: 'button', className: 'btn btn-info', value: 'Info', onClick: this.getId.bind(this),
 							'data-toggle': 'modal', 'data-target': '#info_modal' }),
 						_react2.default.createElement('input', { type: 'button', className: 'btn btn-danger col-xs-offset-3', value: 'Delete' })
 					)
