@@ -25,6 +25,22 @@ class App extends React.Component {
 		console.log(data);
 		return data;
 	}
+	addNewElem(newData) {
+		var elem = {}; 
+		$.ajax({
+			type:'POST',
+			data: JSON.stringify(newData),
+			url:'/upload',
+			success:(data)=>{
+				elem.id = data;
+				Object.assign(elem, newData);
+				let newBuffer = this.state.buffer;
+				newBuffer.unshift(elem)
+				this.setState({buffer: newBuffer});
+			},
+			error:(err)=>{console.log('add error: '+err)}
+		});
+	}
 	getData() {
 
 		$.ajax({
@@ -44,7 +60,7 @@ class App extends React.Component {
 		return	<div>
 					<Menu />
 					<Container data={this.state.buffer} getElemById={this.getElemById.bind(this)}/>
-					<Add_mov_modal />
+					<Add_mov_modal addNewElem={this.addNewElem.bind(this)} />
 					<Choose_file_modal />
 					<Info_modal data={this.state.info}/>
 				</div>

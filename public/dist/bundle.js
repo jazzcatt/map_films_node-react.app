@@ -114,6 +114,28 @@
 				return data;
 			}
 		}, {
+			key: 'addNewElem',
+			value: function addNewElem(newData) {
+				var _this2 = this;
+	
+				var elem = {};
+				_jquery2.default.ajax({
+					type: 'POST',
+					data: JSON.stringify(newData),
+					url: '/upload',
+					success: function success(data) {
+						elem.id = data;
+						Object.assign(elem, newData);
+						var newBuffer = _this2.state.buffer;
+						newBuffer.unshift(elem);
+						_this2.setState({ buffer: newBuffer });
+					},
+					error: function error(err) {
+						console.log('add error: ' + err);
+					}
+				});
+			}
+		}, {
 			key: 'getData',
 			value: function getData() {
 	
@@ -138,7 +160,7 @@
 					null,
 					_react2.default.createElement(_menu2.default, null),
 					_react2.default.createElement(_container2.default, { data: this.state.buffer, getElemById: this.getElemById.bind(this) }),
-					_react2.default.createElement(_addModal2.default, null),
+					_react2.default.createElement(_addModal2.default, { addNewElem: this.addNewElem.bind(this) }),
 					_react2.default.createElement(_chooseFileModal2.default, null),
 					_react2.default.createElement(_infoModal2.default, { data: this.state.info })
 				);
@@ -31975,7 +31997,7 @@
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'modal-body' },
-	                _react2.default.createElement(_addForm2.default, null)
+	                _react2.default.createElement(_addForm2.default, { addNewElem: this.props.addNewElem })
 	              )
 	            )
 	          )
@@ -32019,16 +32041,13 @@
 	    _inherits(Add_form, _React$Component);
 	
 	    function Add_form() {
+	        var _this$state;
+	
 	        _classCallCheck(this, Add_form);
 	
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Add_form).call(this));
 	
-	        _this.state = {
-	            title: null,
-	            year: null,
-	            format: null,
-	            actors: null
-	        };
+	        _this.state = (_this$state = {}, _defineProperty(_this$state, 'Title', null), _defineProperty(_this$state, 'Release Year', null), _defineProperty(_this$state, 'Format', null), _defineProperty(_this$state, 'Stars', null), _this$state);
 	        return _this;
 	    }
 	
@@ -32038,9 +32057,9 @@
 	            this.setState(_defineProperty({}, e.target.name, e.target.value));
 	        }
 	    }, {
-	        key: 'sendData',
-	        value: function sendData() {
-	            // to do send
+	        key: 'getData',
+	        value: function getData() {
+	            this.props.addNewElem(this.state);
 	        }
 	    }, {
 	        key: 'render',
@@ -32056,7 +32075,7 @@
 	                        null,
 	                        'Title '
 	                    ),
-	                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'title' })
+	                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'Title' })
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -32066,7 +32085,7 @@
 	                        null,
 	                        'Year'
 	                    ),
-	                    _react2.default.createElement('input', { type: 'number', className: 'form-control', min: '1900', max: '2020', name: 'year' })
+	                    _react2.default.createElement('input', { type: 'number', className: 'form-control', min: '1900', max: '2020', name: 'Release Year' })
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -32078,7 +32097,12 @@
 	                    ),
 	                    _react2.default.createElement(
 	                        'select',
-	                        { className: 'form-control', name: 'format' },
+	                        { className: 'form-control', name: 'Format' },
+	                        _react2.default.createElement(
+	                            'option',
+	                            null,
+	                            ' ►►♫♪♫♪'
+	                        ),
 	                        _react2.default.createElement(
 	                            'option',
 	                            null,
@@ -32103,13 +32127,13 @@
 	                        'label',
 	                        { className: 'control-label' },
 	                        'Actors',
-	                        _react2.default.createElement('textarea', { className: 'form-control', rows: '5', cols: '50', name: 'actors',
+	                        _react2.default.createElement('textarea', { className: 'form-control', rows: '5', cols: '50', name: 'Stars',
 	                            placeholder: 'Name1, Name2, ... ', maxLength: '200' })
 	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'button',
-	                    { type: 'button', className: 'btn btn-default', onClick: this.sendData.bind(this), 'data-dismiss': 'modal' },
+	                    { type: 'button', className: 'btn btn-default', onClick: this.getData.bind(this), 'data-dismiss': 'modal' },
 	                    '+Add'
 	                )
 	            );

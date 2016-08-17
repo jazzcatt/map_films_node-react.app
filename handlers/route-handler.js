@@ -1,8 +1,15 @@
 var Parser = require('./parser').Parser;
 var fs = require('fs');
 
-function Handler(req, res){
+/*
+/ creates unique value for id
+*/
+var ID = function () {
+  return  Math.random().toString(36).substr(2, 9);
+};
 
+function Handler(req, res){
+    
 	this.load = function(){
 		var buffer = [];
 		fs.readdir('./db', function(err, files) {
@@ -21,6 +28,22 @@ function Handler(req, res){
 			// send buffer
 			res.end(JSON.stringify(buffer));
 		}); //readdir
+	}
+
+	this.upload = function() {
+		var id = ID();
+		req.on('data', function(chunk) {
+			var path = './db/'+id+'.txt';
+			fs.closeSync(fs.openSync(path, 'w'));
+			var record = new Parser(JSON.parse(chunk.toString()));
+			var text = record.createRecord();
+			fs.writeFileSync(path,text,'utf8');
+		});
+		req.on('end', function() {
+		res.writeHead(200,{'Content-Type':'text/plain'});
+		res.end(id);
+		});
+
 	}		
 }
 exports.Handler = Handler;

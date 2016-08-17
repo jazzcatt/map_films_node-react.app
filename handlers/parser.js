@@ -10,6 +10,31 @@ function Parser(data) {
 		});
 		return chunk;
 	}
+
+	this.createRecord = function(){
+		var buffer = [];
+			for(var key in data) {
+			buffer.push(key+': '+data[key]);
+		}
+		console.log(buffer);
+		var text = buffer.join("\r\n");
+		return text;
+	}
+
 }
 
 exports.Parser = Parser;
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

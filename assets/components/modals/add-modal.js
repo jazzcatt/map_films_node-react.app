@@ -16,7 +16,7 @@ class Modal extends React.Component {
                  </div>
 
                 <div className="modal-body">
-                 <Add_form/>
+                 <Add_form addNewElem={this.props.addNewElem}/>
                 </div>
 
             </div>
