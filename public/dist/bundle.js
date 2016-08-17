@@ -74,6 +74,10 @@
 	
 	var _container2 = _interopRequireDefault(_container);
 	
+	var _infoModal = __webpack_require__(185);
+	
+	var _infoModal2 = _interopRequireDefault(_infoModal);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -127,7 +131,8 @@
 					_react2.default.createElement(_menu2.default, null),
 					_react2.default.createElement(_container2.default, { data: this.state.buffer }),
 					_react2.default.createElement(_addModal2.default, null),
-					_react2.default.createElement(_chooseFileModal2.default, null)
+					_react2.default.createElement(_chooseFileModal2.default, null),
+					_react2.default.createElement(_infoModal2.default, null)
 				);
 			}
 		}]);
@@ -32313,7 +32318,8 @@
 					_react2.default.createElement(
 						'div',
 						null,
-						_react2.default.createElement('input', { type: 'button', className: 'btn btn-info', value: 'Info' }),
+						_react2.default.createElement('input', { type: 'button', className: 'btn btn-info', value: 'Info',
+							'data-toggle': 'modal', 'data-target': '#info_modal' }),
 						_react2.default.createElement('input', { type: 'button', className: 'btn btn-danger col-xs-offset-3', value: 'Delete' })
 					)
 				);
@@ -32324,6 +32330,117 @@
 	}(_react2.default.Component);
 	
 	exports.default = Movie_elem;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Info_modal = function (_React$Component) {
+	  _inherits(Info_modal, _React$Component);
+	
+	  function Info_modal() {
+	    _classCallCheck(this, Info_modal);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Info_modal).apply(this, arguments));
+	  }
+	
+	  _createClass(Info_modal, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "div",
+	          { className: "modal fade", id: "info_modal", role: "dialog" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "modal-dialog" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "modal-content" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "modal-header" },
+	                _react2.default.createElement(
+	                  "button",
+	                  { type: "button", className: "btn close", "data-dismiss": "modal" },
+	                  "×"
+	                ),
+	                _react2.default.createElement(
+	                  "h4",
+	                  { className: "modal-title" },
+	                  "Film info"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "modal-body" },
+	                _react2.default.createElement(
+	                  "label",
+	                  { className: "col-md-12" },
+	                  "Title: ",
+	                  this.props.title
+	                ),
+	                _react2.default.createElement(
+	                  "label",
+	                  { className: "col-md-12" },
+	                  "Year: ",
+	                  this.props.year
+	                ),
+	                _react2.default.createElement(
+	                  "label",
+	                  { className: "col-md-12" },
+	                  "Format: ",
+	                  this.props.format
+	                ),
+	                _react2.default.createElement(
+	                  "label",
+	                  { className: "col-md-12" },
+	                  "Actors: ",
+	                  this.props.actors
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "modal-footer" },
+	                _react2.default.createElement(
+	                  "button",
+	                  { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
+	                  "Close"
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Info_modal;
+	}(_react2.default.Component);
+	
+	exports.default = Info_modal;
 
 /***/ }
 /******/ ]);

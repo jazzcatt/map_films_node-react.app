@@ -10,7 +10,8 @@ export default class Movie_elem extends React.Component {
 						<label>Year: {this.props.year}</label>
 					</div>
 					<div>
-						<input type='button' className='btn btn-info' value='Info'/>
+						<input type='button' className='btn btn-info' value='Info'
+						 data-toggle='modal' data-target='#info_modal' />
 						<input type='button' className='btn btn-danger col-xs-offset-3' value='Delete' />
 					</div>
 				</div>

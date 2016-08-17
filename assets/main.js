@@ -6,7 +6,7 @@ import Menu from './components/menu/menu';
 import Add_mov_modal from './components/modals/add-modal';
 import Choose_file_modal from './components/modals/choose-file-modal';
 import Container from './components/content/container';
-
+import Info_modal from './components/modals/info-modal';
 
 class App extends React.Component {
 
@@ -41,6 +41,7 @@ class App extends React.Component {
 					<Container data={this.state.buffer} />
 					<Add_mov_modal />
 					<Choose_file_modal />
+					<Info_modal/>
 				</div>
 	}
 }
