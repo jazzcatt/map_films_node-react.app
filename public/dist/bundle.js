@@ -95,7 +95,8 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
 			_this.state = {
-				buffer: []
+				buffer: [],
+				info: {}
 			};
 			return _this;
 		}
@@ -106,10 +107,11 @@
 				this.getData();
 			}
 		}, {
-			key: 'getId',
-			value: function getId(id) {
-				console.log(id);
-				return id;
+			key: 'getElemById',
+			value: function getElemById(data) {
+				this.setState({ info: data });
+				console.log(data);
+				return data;
 			}
 		}, {
 			key: 'getData',
@@ -118,9 +120,8 @@
 				_jquery2.default.ajax({
 					type: 'GET',
 					response: 'json',
-					url: 'http://localhost:3000/load',
+					url: '/load',
 					success: function (data) {
-						console.log(data);
 						this.setState({ buffer: JSON.parse(data) });
 					}.bind(this),
 					error: function (error) {
@@ -136,10 +137,10 @@
 					'div',
 					null,
 					_react2.default.createElement(_menu2.default, null),
-					_react2.default.createElement(_container2.default, { data: this.state.buffer, getId: this.getId.bind(this) }),
+					_react2.default.createElement(_container2.default, { data: this.state.buffer, getElemById: this.getElemById.bind(this) }),
 					_react2.default.createElement(_addModal2.default, null),
 					_react2.default.createElement(_chooseFileModal2.default, null),
-					_react2.default.createElement(_infoModal2.default, null)
+					_react2.default.createElement(_infoModal2.default, { data: this.state.info })
 				);
 			}
 		}]);
@@ -32251,7 +32252,7 @@
 				var _this2 = this;
 	
 				var elems = this.props.data.map(function (e, i) {
-					return _react2.default.createElement(_movieElem2.default, { id: e.id, title: e.Title, year: e['Release Year'], key: i, getId: _this2.props.getId });
+					return _react2.default.createElement(_movieElem2.default, { data: e, key: e.id, getElemById: _this2.props.getElemById });
 				});
 				return _react2.default.createElement(
 					'div',
@@ -32302,7 +32303,7 @@
 		_createClass(Movie_elem, [{
 			key: 'getId',
 			value: function getId() {
-				this.props.getId(this.props.id);
+				this.props.getElemById(this.props.data);
 			}
 		}, {
 			key: 'render',
@@ -32318,7 +32319,7 @@
 							'label',
 							null,
 							'Title: ',
-							this.props.title,
+							this.props.data['Title'],
 							' '
 						),
 						_react2.default.createElement('br', null),
@@ -32326,7 +32327,7 @@
 							'label',
 							null,
 							'Year: ',
-							this.props.year
+							this.props.data['Release Year']
 						)
 					),
 					_react2.default.createElement(
@@ -32408,32 +32409,34 @@
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "div",
-	                { className: "modal-body" },
-	                _react2.default.createElement(
-	                  "label",
-	                  { className: "col-md-12" },
-	                  "Title: ",
-	                  this.props.title
-	                ),
-	                _react2.default.createElement(
-	                  "label",
-	                  { className: "col-md-12" },
-	                  "Year: ",
-	                  this.props.year
-	                ),
-	                _react2.default.createElement(
-	                  "label",
-	                  { className: "col-md-12" },
-	                  "Format: ",
-	                  this.props.format
-	                ),
-	                _react2.default.createElement(
-	                  "label",
-	                  { className: "col-md-12" },
-	                  "Actors: ",
-	                  this.props.actors
-	                )
+	                "label",
+	                { className: "col-md-12" },
+	                "Id: ",
+	                this.props.data['id']
+	              ),
+	              _react2.default.createElement(
+	                "label",
+	                { className: "col-md-12" },
+	                "Title: ",
+	                this.props.data['Title']
+	              ),
+	              _react2.default.createElement(
+	                "label",
+	                { className: "col-md-12" },
+	                "Year: ",
+	                this.props.data['Release Year']
+	              ),
+	              _react2.default.createElement(
+	                "label",
+	                { className: "col-md-12" },
+	                "Format: ",
+	                this.props.data['Format']
+	              ),
+	              _react2.default.createElement(
+	                "label",
+	                { className: "col-md-12" },
+	                "Actors: ",
+	                this.props.data['Stars']
 	              ),
 	              _react2.default.createElement(
 	                "div",

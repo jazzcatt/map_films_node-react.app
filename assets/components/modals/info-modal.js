@@ -11,12 +11,13 @@ class Info_modal extends React.Component {
                        <h4 className="modal-title">Film info</h4>
                         </div>
        
-                       <div className="modal-body">
-                         <label className='col-md-12'>Title: {this.props.title}</label>
-                         <label className='col-md-12'>Year: {this.props.year}</label>
-                         <label className='col-md-12'>Format: {this.props.format}</label>
-                         <label className='col-md-12'>Actors: {this.props.actors}</label>
-                       </div>
+                      
+                       	 <label className='col-md-12'>Id: {this.props.data['id']}</label>
+                         <label className='col-md-12'>Title: {this.props.data['Title']}</label>
+                         <label className='col-md-12'>Year: {this.props.data['Release Year']}</label>
+                         <label className='col-md-12'>Format: {this.props.data['Format']}</label>
+                         <label className='col-md-12'>Actors: {this.props.data['Stars']}</label>
+                      
 
          				<div className="modal-footer">
               				 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>

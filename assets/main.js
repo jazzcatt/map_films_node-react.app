@@ -13,24 +13,25 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			buffer: []
+			buffer: [],
+			info: {}
 		}
 	}
 	componentDidMount() {
 		this.getData();
 	}
-	getId(id) {
-		console.log(id);
-		return id;
+	getElemById(data) {
+		this.setState({info: data});
+		console.log(data);
+		return data;
 	}
 	getData() {
 
 		$.ajax({
 			type:'GET',
 			response: 'json',
-			url: 'http://localhost:3000/load',
+			url: '/load',
 			success: function(data) {
-				console.log(data);
 			this.setState({buffer: JSON.parse(data)});
 			}.bind(this),
 			error: function (error) {
@@ -42,10 +43,10 @@ class App extends React.Component {
 
 		return	<div>
 					<Menu />
-					<Container data={this.state.buffer} getId={this.getId.bind(this)}/>
+					<Container data={this.state.buffer} getElemById={this.getElemById.bind(this)}/>
 					<Add_mov_modal />
 					<Choose_file_modal />
-					<Info_modal/>
+					<Info_modal data={this.state.info}/>
 				</div>
 	}
 }

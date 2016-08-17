@@ -2,15 +2,15 @@ import React from 'react';
 
 export default class Movie_elem extends React.Component {
 	getId(){
-		this.props.getId(this.props.id);
+		this.props.getElemById(this.props.data);
 	}
 	render() {
 		return <div className='film-elem col-md-4'>
 		 			<div className='film-head'>
 						<img src='src/img/default.jpg' className='film-img col-md-4'/>
-						<label>Title: {this.props.title} </label>
+						<label>Title: {this.props.data['Title']} </label>
 						<br />
-						<label>Year: {this.props.year}</label>
+						<label>Year: {this.props.data['Release Year']}</label>
 					</div>
 					<div>
 						<input type='button' className='btn btn-info' value='Info' onClick={this.getId.bind(this)}
