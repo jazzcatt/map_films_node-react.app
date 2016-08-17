@@ -82,6 +82,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	function parser(data) {
+		return JSON.parse(data);
+	}
+	
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
 	
@@ -91,15 +95,36 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
 			_this.state = {
-				buffer: _this.getData()
+				buffer: []
 			};
 			return _this;
 		}
 	
 		_createClass(App, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.getData();
+			}
+		}, {
 			key: 'getData',
 			value: function getData() {
-				var buffer = [{ title: 'movit title', year: 1000, actors: 'Daya patya, tetya motya' }, { title: 'secont ditl', year: 2000, actors: 'Daya patya, tetya motya' }];
+				var buffer = [];
+	
+				_jquery2.default.ajax({
+					type: 'GET',
+					response: 'json',
+					url: 'http://localhost:3000/load',
+					success: function (data) {
+						buffer.push(parser(data));
+						console.log('container' + buffer);
+						this.setState({ buffer: buffer[0] });
+					}.bind(this),
+					error: function (error) {
+						console.log('error: ' + JSON.stringify(error));
+					}.bind(this)
+				});
+	
+				//let buffer = [{title:'movit title',year:1000,actors:'Daya patya, tetya motya'},{title:'secont ditl', year:2000,actors:'Daya patya, tetya motya'}];
 				return buffer;
 			}
 		}, {
@@ -32221,8 +32246,9 @@
 		_createClass(Container, [{
 			key: 'render',
 			value: function render() {
+				console.log('From cotnainer: ' + this.props.data);
 				var elems = this.props.data.map(function (e, i) {
-					return _react2.default.createElement(_movieElem2.default, { title: e.title, year: e.year, key: i });
+					return _react2.default.createElement(_movieElem2.default, { title: e.Title, year: e['Release Year'], key: i });
 				});
 				return _react2.default.createElement(
 					'div',
