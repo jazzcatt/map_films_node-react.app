@@ -6,7 +6,9 @@ export default class Movie_elem extends React.Component {
 	}
 	render() {
 		return <div className='film-elem col-md-4'>
+		<label>#{this.props.num+1}</label>
 		 			<div className='film-head'>
+
 						<img src='src/img/default.jpg' className='film-img col-md-4'/>
 						<label>Title: {this.props.data['Title']} </label>
 						<br />

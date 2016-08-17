@@ -12,11 +12,11 @@ class Info_modal extends React.Component {
                         </div>
        
                       
-                       	 <label className='col-md-12'>Id: {this.props.data['id']}</label>
-                         <label className='col-md-12'>Title: {this.props.data['Title']}</label>
-                         <label className='col-md-12'>Year: {this.props.data['Release Year']}</label>
-                         <label className='col-md-12'>Format: {this.props.data['Format']}</label>
-                         <label className='col-md-12'>Actors: {this.props.data['Stars']}</label>
+                       	 <label className='col-md-12'><u>Id:</u> {this.props.data['id']}</label>
+                         <label className='col-md-12'><u>Title:</u> {this.props.data['Title']}</label>
+                         <label className='col-md-12'><u>Year:</u> {this.props.data['Release Year']}</label>
+                         <label className='col-md-12'><u>Format:</u> {this.props.data['Format']}</label>
+                         <label className='col-md-12'><u>Actors:</u>{this.props.data['Stars']}</label>
                       
 
          				<div className="modal-footer">

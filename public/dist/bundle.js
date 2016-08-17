@@ -32252,7 +32252,7 @@
 				var _this2 = this;
 	
 				var elems = this.props.data.map(function (e, i) {
-					return _react2.default.createElement(_movieElem2.default, { data: e, key: e.id, getElemById: _this2.props.getElemById });
+					return _react2.default.createElement(_movieElem2.default, { num: i, data: e, key: e.id, getElemById: _this2.props.getElemById });
 				});
 				return _react2.default.createElement(
 					'div',
@@ -32311,6 +32311,12 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'film-elem col-md-4' },
+					_react2.default.createElement(
+						'label',
+						null,
+						'#',
+						this.props.num + 1
+					),
 					_react2.default.createElement(
 						'div',
 						{ className: 'film-head' },
@@ -32411,31 +32417,55 @@
 	              _react2.default.createElement(
 	                "label",
 	                { className: "col-md-12" },
-	                "Id: ",
+	                _react2.default.createElement(
+	                  "u",
+	                  null,
+	                  "Id:"
+	                ),
+	                " ",
 	                this.props.data['id']
 	              ),
 	              _react2.default.createElement(
 	                "label",
 	                { className: "col-md-12" },
-	                "Title: ",
+	                _react2.default.createElement(
+	                  "u",
+	                  null,
+	                  "Title:"
+	                ),
+	                " ",
 	                this.props.data['Title']
 	              ),
 	              _react2.default.createElement(
 	                "label",
 	                { className: "col-md-12" },
-	                "Year: ",
+	                _react2.default.createElement(
+	                  "u",
+	                  null,
+	                  "Year:"
+	                ),
+	                " ",
 	                this.props.data['Release Year']
 	              ),
 	              _react2.default.createElement(
 	                "label",
 	                { className: "col-md-12" },
-	                "Format: ",
+	                _react2.default.createElement(
+	                  "u",
+	                  null,
+	                  "Format:"
+	                ),
+	                " ",
 	                this.props.data['Format']
 	              ),
 	              _react2.default.createElement(
 	                "label",
 	                { className: "col-md-12" },
-	                "Actors: ",
+	                _react2.default.createElement(
+	                  "u",
+	                  null,
+	                  "Actors:"
+	                ),
 	                this.props.data['Stars']
 	              ),
 	              _react2.default.createElement(
