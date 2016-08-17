@@ -10,9 +10,10 @@ function Handler(req, res){
 				console.log(err+' reading error');
 			} else {
 				files.forEach((filename) =>{
+					var id = filename.substring(0,filename.length-4);
 					var text = fs.readFileSync('./db/'+filename).toString();
 					var parser = new Parser(text);
-					var elem = parser.createElem();
+					var elem = parser.createElem(id);
 					buffer.push(elem);
 				}); //files.forEach
 			}

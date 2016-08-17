@@ -27,6 +27,7 @@ class App extends React.Component {
 			response: 'json',
 			url: 'http://localhost:3000/load',
 			success: function(data) {
+				console.log(data);
 			this.setState({buffer: JSON.parse(data)});
 			}.bind(this),
 			error: function (error) {

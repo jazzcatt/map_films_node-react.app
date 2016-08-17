@@ -1,8 +1,8 @@
 function Parser(data) {
 	
-	this.createElem = function(){
+	this.createElem = function(id){
 		var lines = data.split('\n');
-		var chunk = {};
+		var chunk = {id: id};
 
 		lines.forEach((line)=>{
 			var parts = line.split(':');
