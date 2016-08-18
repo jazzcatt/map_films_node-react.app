@@ -21,7 +21,7 @@ export default class Menu extends React.Component {
 						<input type='button' className='btn btn-warning btn-sm ' value='↺Export'
 						data-toggle='modal' data-target='#choose_modal' />
 
-						<Sort_by />
+						<Sort_by sort={this.props.sort} />
 					</form>
 				</div>
 	}

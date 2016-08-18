@@ -170,6 +170,33 @@
 				});
 			}
 		}, {
+			key: 'sort',
+			value: function sort(by) {
+				var sortBuffer = this.state.buffer;
+				if (by == 'A-z/А-я') {
+					sortBuffer.sort(function (a, b) {
+						if (a['Title'] > b['Title']) {
+							return 1;
+						}
+						if (a['Title'] < b['Title']) {
+							return -1;
+						}
+						return 0;
+					});
+				} else if (by == 'Z-a/Я-а') {
+					sortBuffer.sort(function (a, b) {
+						if (a['Title'] > b['Title']) {
+							return -1;
+						}
+						if (a['Title'] < b['Title']) {
+							return 1;
+						}
+						return 0;
+					});
+				}
+				this.setState({ buffer: sortBuffer });
+			}
+		}, {
 			key: 'getData',
 			value: function getData() {
 	
@@ -192,7 +219,7 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_menu2.default, null),
+					_react2.default.createElement(_menu2.default, { sort: this.sort.bind(this) }),
 					_react2.default.createElement(_container2.default, { data: this.state.buffer, getElemById: this.getElemById.bind(this), getIdForDel: this.getIdForDel.bind(this) }),
 					_react2.default.createElement(_addModal2.default, { addNewElem: this.addNewElem.bind(this) }),
 					_react2.default.createElement(_chooseFileModal2.default, null),
@@ -31759,7 +31786,7 @@
 							'data-toggle': 'modal', 'data-target': '#add_modal', 'data-backdrop': 'static', 'data-keyboard': 'false' }),
 						_react2.default.createElement('input', { type: 'button', className: 'btn btn-warning btn-sm ', value: '↺Export',
 							'data-toggle': 'modal', 'data-target': '#choose_modal' }),
-						_react2.default.createElement(_sortBy2.default, null)
+						_react2.default.createElement(_sortBy2.default, { sort: this.props.sort })
 					)
 				);
 			}
@@ -31925,6 +31952,11 @@
 		}
 	
 		_createClass(Sort_by, [{
+			key: 'onChange',
+			value: function onChange(e) {
+				this.props.sort(e.target.value);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -31937,7 +31969,7 @@
 					),
 					_react2.default.createElement(
 						'select',
-						{ className: 'form-control' },
+						{ className: 'form-control', onChange: this.onChange.bind(this) },
 						_react2.default.createElement(
 							'option',
 							null,

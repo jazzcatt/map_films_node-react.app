@@ -65,6 +65,33 @@ class App extends React.Component {
 		});
 		
 	}
+	sort(by) {
+		let sortBuffer = this.state.buffer;
+		if(by =='A-z/А-я') {
+		sortBuffer.sort((a,b)=>{
+			if(a['Title']>b['Title']) {
+				return 1;
+			}
+			if(a['Title']<b['Title']) {
+				return -1
+			}
+			return 0;
+		});
+			
+		}else if(by == 'Z-a/Я-а') {
+			sortBuffer.sort((a,b)=>{
+				if(a['Title']>b['Title']) {
+					return -1;
+				}
+				if(a['Title']<b['Title']){
+					return 1;
+				}
+				return 0;
+			});
+
+		} 
+		this.setState({buffer: sortBuffer});
+	}
 	getData() {
 
 		$.ajax({
@@ -82,7 +109,7 @@ class App extends React.Component {
 	render() {
 
 		return	<div>
-					<Menu />
+					<Menu sort={this.sort.bind(this)}/>
 					<Container data={this.state.buffer} getElemById={this.getElemById.bind(this)} getIdForDel={this.getIdForDel.bind(this)} />
 					<Add_mov_modal addNewElem={this.addNewElem.bind(this)} />
 					<Choose_file_modal />
