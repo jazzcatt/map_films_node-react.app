@@ -7,6 +7,7 @@ import Add_mov_modal from './components/modals/add-modal';
 import Choose_file_modal from './components/modals/choose-file-modal';
 import Container from './components/content/container';
 import Info_modal from './components/modals/info-modal';
+import Delete_modal from './components/modals/delete-modal';
 
 class App extends React.Component {
 
@@ -14,15 +15,15 @@ class App extends React.Component {
 		super();
 		this.state = {
 			buffer: [],
-			info: {}
+			info: {},
+			id_forDel:''
 		}
 	}
 	componentDidMount() {
 		this.getData();
 	}
-	getElemById(data) {
+	getElemById(data) {   //get data from element
 		this.setState({info: data});
-		console.log(data);
 		return data;
 	}
 	addNewElem(newData) {
@@ -40,6 +41,29 @@ class App extends React.Component {
 			},
 			error:(err)=>{console.log('add error: '+err)}
 		});
+	}
+	getIdForDel(id){
+		this.setState({id_forDel: id});
+	}
+	deleteElem(id) {
+		$.ajax({
+			type: 'POST',
+			data: id,
+			url: '/delete',
+			success: ()=>{
+				let newBuffer = this.state.buffer;
+				for(let i = 0; i<newBuffer.length; i++) {
+					if(newBuffer[i].id == id) {
+						newBuffer.splice(i, 1);
+						this.setState({buffer: newBuffer});
+					}
+				}
+			},
+			error: (err)=>{console.log(JSON.stringify(err));
+				alert('There was some problem, try again somewhen...o_O');
+			}
+		});
+		
 	}
 	getData() {
 
@@ -59,10 +83,11 @@ class App extends React.Component {
 
 		return	<div>
 					<Menu />
-					<Container data={this.state.buffer} getElemById={this.getElemById.bind(this)}/>
+					<Container data={this.state.buffer} getElemById={this.getElemById.bind(this)} getIdForDel={this.getIdForDel.bind(this)} />
 					<Add_mov_modal addNewElem={this.addNewElem.bind(this)} />
 					<Choose_file_modal />
 					<Info_modal data={this.state.info}/>
+					<Delete_modal deleteElem={this.deleteElem.bind(this)} id={this.state.id_forDel}/>
 				</div>
 	}
 }

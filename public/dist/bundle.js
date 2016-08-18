@@ -78,6 +78,10 @@
 	
 	var _infoModal2 = _interopRequireDefault(_infoModal);
 	
+	var _deleteModal = __webpack_require__(186);
+	
+	var _deleteModal2 = _interopRequireDefault(_deleteModal);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -96,7 +100,8 @@
 	
 			_this.state = {
 				buffer: [],
-				info: {}
+				info: {},
+				id_forDel: ''
 			};
 			return _this;
 		}
@@ -109,8 +114,8 @@
 		}, {
 			key: 'getElemById',
 			value: function getElemById(data) {
+				//get data from element
 				this.setState({ info: data });
-				console.log(data);
 				return data;
 			}
 		}, {
@@ -132,6 +137,35 @@
 					},
 					error: function error(err) {
 						console.log('add error: ' + err);
+					}
+				});
+			}
+		}, {
+			key: 'getIdForDel',
+			value: function getIdForDel(id) {
+				this.setState({ id_forDel: id });
+			}
+		}, {
+			key: 'deleteElem',
+			value: function deleteElem(id) {
+				var _this3 = this;
+	
+				_jquery2.default.ajax({
+					type: 'POST',
+					data: id,
+					url: '/delete',
+					success: function success() {
+						var newBuffer = _this3.state.buffer;
+						for (var i = 0; i < newBuffer.length; i++) {
+							if (newBuffer[i].id == id) {
+								newBuffer.splice(i, 1);
+								_this3.setState({ buffer: newBuffer });
+							}
+						}
+					},
+					error: function error(err) {
+						console.log(JSON.stringify(err));
+						alert('There was some problem, try again somewhen...o_O');
 					}
 				});
 			}
@@ -159,10 +193,11 @@
 					'div',
 					null,
 					_react2.default.createElement(_menu2.default, null),
-					_react2.default.createElement(_container2.default, { data: this.state.buffer, getElemById: this.getElemById.bind(this) }),
+					_react2.default.createElement(_container2.default, { data: this.state.buffer, getElemById: this.getElemById.bind(this), getIdForDel: this.getIdForDel.bind(this) }),
 					_react2.default.createElement(_addModal2.default, { addNewElem: this.addNewElem.bind(this) }),
 					_react2.default.createElement(_chooseFileModal2.default, null),
-					_react2.default.createElement(_infoModal2.default, { data: this.state.info })
+					_react2.default.createElement(_infoModal2.default, { data: this.state.info }),
+					_react2.default.createElement(_deleteModal2.default, { deleteElem: this.deleteElem.bind(this), id: this.state.id_forDel })
 				);
 			}
 		}]);
@@ -32276,7 +32311,7 @@
 				var _this2 = this;
 	
 				var elems = this.props.data.map(function (e, i) {
-					return _react2.default.createElement(_movieElem2.default, { num: i, data: e, key: e.id, getElemById: _this2.props.getElemById });
+					return _react2.default.createElement(_movieElem2.default, { num: i, data: e, key: e.id, getElemById: _this2.props.getElemById, getIdForDel: _this2.props.getIdForDel });
 				});
 				return _react2.default.createElement(
 					'div',
@@ -32325,9 +32360,14 @@
 		}
 	
 		_createClass(Movie_elem, [{
+			key: 'giveData',
+			value: function giveData() {
+				this.props.getElemById(this.props.data);
+			}
+		}, {
 			key: 'getId',
 			value: function getId() {
-				this.props.getElemById(this.props.data);
+				this.props.getIdForDel(this.props.data['id']);
 			}
 		}, {
 			key: 'render',
@@ -32363,9 +32403,10 @@
 					_react2.default.createElement(
 						'div',
 						null,
-						_react2.default.createElement('input', { type: 'button', className: 'btn btn-info', value: 'Info', onClick: this.getId.bind(this),
+						_react2.default.createElement('input', { type: 'button', className: 'btn btn-info', value: 'Info', onClick: this.giveData.bind(this),
 							'data-toggle': 'modal', 'data-target': '#info_modal' }),
-						_react2.default.createElement('input', { type: 'button', className: 'btn btn-danger col-xs-offset-3', value: 'Delete' })
+						_react2.default.createElement('input', { type: 'button', className: 'btn btn-danger col-xs-offset-3', value: 'Delete',
+							'data-toggle': 'modal', 'data-target': '#del_modal', onClick: this.getId.bind(this) })
 					)
 				);
 			}
@@ -32490,6 +32531,7 @@
 	                  null,
 	                  "Actors:"
 	                ),
+	                " ",
 	                this.props.data['Stars']
 	              ),
 	              _react2.default.createElement(
@@ -32512,6 +32554,92 @@
 	}(_react2.default.Component);
 	
 	exports.default = Info_modal;
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Delete_modal = function (_React$Component) {
+	  _inherits(Delete_modal, _React$Component);
+	
+	  function Delete_modal() {
+	    _classCallCheck(this, Delete_modal);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Delete_modal).apply(this, arguments));
+	  }
+	
+	  _createClass(Delete_modal, [{
+	    key: "delete",
+	    value: function _delete() {
+	      this.props.deleteElem(this.props.id);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "div",
+	          { className: "modal fade", id: "del_modal", role: "dialog" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "modal-dialog" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "modal-content" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "modal-header" },
+	                _react2.default.createElement(
+	                  "button",
+	                  { type: "button", className: "btn close", "data-dismiss": "modal" },
+	                  "×"
+	                ),
+	                _react2.default.createElement(
+	                  "h4",
+	                  { className: "modal-title" },
+	                  "Are you sure?"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "modal-body" },
+	                _react2.default.createElement("input", { type: "button", className: "btn btn-primary", value: "Not delete", "data-dismiss": "modal" }),
+	                _react2.default.createElement("input", { type: "button", className: "btn btn-danger pull-right",
+	                  "data-dismiss": "modal", value: "Delete", onClick: this.delete.bind(this) })
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Delete_modal;
+	}(_react2.default.Component);
+	
+	exports.default = Delete_modal;
 
 /***/ }
 /******/ ]);

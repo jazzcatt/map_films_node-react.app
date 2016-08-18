@@ -16,7 +16,7 @@ class Info_modal extends React.Component {
                          <label className='col-md-12'><u>Title:</u> {this.props.data['Title']}</label>
                          <label className='col-md-12'><u>Year:</u> {this.props.data['Release Year']}</label>
                          <label className='col-md-12'><u>Format:</u> {this.props.data['Format']}</label>
-                         <label className='col-md-12'><u>Actors:</u>{this.props.data['Stars']}</label>
+                         <label className='col-md-12'><u>Actors:</u> {this.props.data['Stars']}</label>
                       
 
          				<div className="modal-footer">

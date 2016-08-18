@@ -16,7 +16,6 @@ function Parser(data) {
 			for(var key in data) {
 			buffer.push(key+': '+data[key]);
 		}
-		console.log(buffer);
 		var text = buffer.join("\r\n");
 		return text;
 	}

@@ -14,7 +14,8 @@ function Handler(req, res){
 		var buffer = [];
 		fs.readdir('./db', function(err, files) {
 			if(err){
-				console.log(err+' reading error');
+				res.writeHead(500)
+				res.end();
 			} else {
 				files.forEach((filename) =>{
 					var id = filename.substring(0,filename.length-4);
@@ -44,7 +45,17 @@ function Handler(req, res){
 		res.end(id);
 		});
 
-	}		
+	}	
+
+	this.delete = function() {
+		req.on('data', function(chunk) {
+			fs.unlinkSync('./db/'+chunk.toString()+'.txt');
+		});
+		req.on('end', function() {
+			res.writeHead(200, {'Content-Type': 'text/plain'});
+			res.end('Delete successed');
+		});
+	}	
 }
 exports.Handler = Handler;
 
