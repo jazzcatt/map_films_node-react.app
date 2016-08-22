@@ -197,6 +197,24 @@
 				this.setState({ buffer: sortBuffer });
 			}
 		}, {
+			key: 'search',
+			value: function search(param) {
+				var foundElems = [];
+				this.state.buffer.forEach(function (e) {
+					if (e['Title'].toLowerCase().indexOf(param.toLowerCase()) + 1) {
+						foundElems.push(e);
+					}
+				});
+				console.log(foundElems);
+				this.setState({ buffer: foundElems });
+				if (foundElems.length == 0) {
+					var notFoundMessage = document.createElement('div');
+					notFoundMessage.className = 'empty-search';
+					notFoundMessage.innerHTML = '<h3>Your search did not match...</h3>';
+					document.getElementById('root').appendChild(notFoundMessage);
+				}
+			}
+		}, {
 			key: 'getData',
 			value: function getData() {
 	
@@ -219,7 +237,7 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_menu2.default, { sort: this.sort.bind(this) }),
+					_react2.default.createElement(_menu2.default, { sort: this.sort.bind(this), search: this.search.bind(this) }),
 					_react2.default.createElement(_container2.default, { data: this.state.buffer, getElemById: this.getElemById.bind(this), getIdForDel: this.getIdForDel.bind(this) }),
 					_react2.default.createElement(_addModal2.default, { addNewElem: this.addNewElem.bind(this) }),
 					_react2.default.createElement(_chooseFileModal2.default, null),
@@ -31739,9 +31757,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _select = __webpack_require__(177);
+	var _selectSearch = __webpack_require__(177);
 	
-	var _select2 = _interopRequireDefault(_select);
+	var _selectSearch2 = _interopRequireDefault(_selectSearch);
 	
 	var _searchLine = __webpack_require__(178);
 	
@@ -31767,11 +31785,18 @@
 	
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Menu).call(this));
 	
-			_this.state = { searchFor: 'search' };
+			_this.state = { searchBy: ''
+	
+			};
 			return _this;
 		}
 	
 		_createClass(Menu, [{
+			key: 'tipSearchBy',
+			value: function tipSearchBy(param) {
+				this.setState({ searchBy: 'Search by: ' + param });
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -31780,8 +31805,8 @@
 					_react2.default.createElement(
 						'form',
 						{ className: 'form-inline' },
-						_react2.default.createElement(_searchLine2.default, { searshFor: this.state.searchFor }),
-						_react2.default.createElement(_select2.default, null),
+						_react2.default.createElement(_searchLine2.default, { searchBy: this.state.searchBy, search: this.props.search }),
+						_react2.default.createElement(_selectSearch2.default, { tipSearchBy: this.tipSearchBy.bind(this) }),
 						_react2.default.createElement('input', { type: 'button', className: 'btn btn-primary btn-sm col-xs-offset-1', value: '+Add Film',
 							'data-toggle': 'modal', 'data-target': '#add_modal', 'data-backdrop': 'static', 'data-keyboard': 'false' }),
 						_react2.default.createElement('input', { type: 'button', className: 'btn btn-warning btn-sm ', value: '↺Export',
@@ -31831,6 +31856,11 @@
 		}
 	
 		_createClass(Select, [{
+			key: 'onChange',
+			value: function onChange(e) {
+				this.props.tipSearchBy(e.target.value);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -31846,7 +31876,7 @@
 						{ className: 'col-xs-5' },
 						_react2.default.createElement(
 							'select',
-							{ id: 'selFor', className: 'form-control' },
+							{ id: 'selFor', className: 'form-control', onChange: this.onChange.bind(this) },
 							_react2.default.createElement(
 								'option',
 								null,
@@ -31898,17 +31928,49 @@
 		function Search_line() {
 			_classCallCheck(this, Search_line);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Search_line).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Search_line).call(this));
+	
+			_this.state = {
+				goSearchDis: true,
+				goToAllDis: true
+			};
+			return _this;
 		}
 	
 		_createClass(Search_line, [{
+			key: 'keyPress',
+			value: function keyPress(e) {
+				if (e.keyCode == 8 && e.target.value.length == 1) {
+					this.setState({ goSearchDis: true });
+				} else if (e.keyCode == 32 && e.target.value == '') {
+					e.preventDefault();
+				} else if (e.keyCode != 13 && e.keyCode != 8) {
+					this.setState({ goSearchDis: false });
+				} else if (e.keyCode == 13 && e.target.value != '') {
+					e.preventDefault();
+					this.setState({ goToAllDis: false });
+					this.props.search(e.target.value);
+				}
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
 					{ className: 'form-group col-md-offset-1' },
-					_react2.default.createElement('input', { type: 'text', className: 'form-control', maxLength: '25', placeholder: 'Search' }),
-					_react2.default.createElement('input', { type: 'button', className: 'btn btn-primary', value: 'Search' })
+					_react2.default.createElement(
+						'button',
+						{ className: 'btn btn-default', disabled: this.state.goToAllDis },
+						_react2.default.createElement('img', { src: 'src/img/loop.png' }),
+						' To all'
+					),
+					_react2.default.createElement('input', { type: 'text', className: 'form-control', maxLength: '25', placeholder: this.props.searchBy,
+						onKeyDown: this.keyPress.bind(this) }),
+					_react2.default.createElement(
+						'button',
+						{ className: 'btn btn-primary', disabled: this.state.goSearchDis },
+						'Go'
+					)
 				);
 			}
 		}]);

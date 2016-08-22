@@ -92,6 +92,22 @@ class App extends React.Component {
 		} 
 		this.setState({buffer: sortBuffer});
 	}
+	search(param){
+		let foundElems = [];
+		this.state.buffer.forEach((e)=>{
+			if(e['Title'].toLowerCase().indexOf(param.toLowerCase())+1){
+				foundElems.push(e);
+			}
+		});
+		console.log(foundElems);
+		this.setState({buffer: foundElems});
+		if(foundElems.length == 0) {
+			let notFoundMessage = document.createElement('div');
+			notFoundMessage.className = 'empty-search'
+			notFoundMessage.innerHTML = '<h3>Your search did not match...</h3>';
+			document.getElementById('root').appendChild(notFoundMessage);
+		}
+	}
 	getData() {
 
 		$.ajax({
@@ -109,7 +125,7 @@ class App extends React.Component {
 	render() {
 
 		return	<div>
-					<Menu sort={this.sort.bind(this)}/>
+					<Menu sort={this.sort.bind(this)} search={this.search.bind(this)}/>
 					<Container data={this.state.buffer} getElemById={this.getElemById.bind(this)} getIdForDel={this.getIdForDel.bind(this)} />
 					<Add_mov_modal addNewElem={this.addNewElem.bind(this)} />
 					<Choose_file_modal />
