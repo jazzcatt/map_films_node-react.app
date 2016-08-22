@@ -8,4 +8,13 @@ Technologies: react.js, node.js, jquery, bootstrap.
   to do /
   - search by Title or Actor
   - export from txt file
+
+
+Run application:
+
+ npm i node-static
+
+ npm start
+
+ run browser on localhost:3000
    
